@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.opensourcebim</groupId>
 	<artifactId>console</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -161,7 +161,8 @@
 		<url>https://github.com/opensourceBIM/Console.git</url>
 		<connection>scm:git:https://github.com/opensourceBIM/Console.git</connection>
 		<developerConnection>scm:git:https://github.com/opensourceBIM/Console.git</developerConnection>
-	</scm>
+	  <tag>HEAD</tag>
+  </scm>
 	<organization>
 		<name>OpenSource BIM</name>
 		<url>opensourcebim.org</url>
