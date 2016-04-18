@@ -35,8 +35,9 @@
 								<p>
 									<div class="subtitle">Execute your own calls and get to learn the way of the BIMserver
 									</div>
-									<span class="version"></span>
 								</p>
+								<div class="consoleVersion"></div>
+								<div class="bimServerVersion"></div>
 							</div>
 						</div>
 					</div>
@@ -209,8 +210,11 @@ LazyLoad.js([
 		$(".largeLogo").attr("src", Global.baseDir + "img/consolelogolarge.png");
 		$(".title").html(ConsoleSettings.title);
 		$(".subtitle").html(ConsoleSettings.subtitle);
-		$(".version").html("Version: " + ConsoleSettings.getVersion());
 
+		$.get("plugin.version", function(version){
+			$(".consoleVersion").html("Console version: " + version.version);
+		});
+		
 		var scenarios = [
 			{
 				name: "Checkin IFC",
@@ -692,7 +696,7 @@ LazyLoad.js([
 				});
 				return;
 			} else if (type.name.contains("org.bimserver")) {
-				controls.append("Complex objects have not been implemented in console.html");
+				controls.append("Complex objects have not been implemented in the Console application");
 			} else if (type.name.contains("javax.activation.DataHandler")) {
 				var input = $("<input class=\"form-control\" type=\"file\"/>");
 				input.addClass("__field" + fieldName);
@@ -739,7 +743,7 @@ LazyLoad.js([
 				
 				label.append(input);
 			} else if (type.simpleName == "List") {
-				controls.append("List objects have not been implemented in console.html");
+				controls.append("List objects have not been implemented in the Console application");
 			} else {
 				var input = $("<input type=\"text\" class=\"form-control\"/>");
 				input.keyup(othis.inputChange);
@@ -1075,6 +1079,18 @@ LazyLoad.js([
 				});
 			}
 			othis.loadMethods();
+		});
+		
+		var request = {
+				request: {
+					"interface": "AdminInterface",
+					method: "getServerInfo",
+					parameters: {
+					}
+				}
+			};
+		othis.call(request, function(serverInfo){
+			$(".bimServerVersion").html("BIMserver version: " + serverInfo.response.result.version.fullString);
 		});
 	}
 	new Console();
