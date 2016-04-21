@@ -223,14 +223,14 @@ LazyLoad.js([
 						id: "login",
 						name: "Login",
 						description: "First you will have to login, if you are already logged-in, you can skip this step",
-						interface: "Bimsie1AuthInterface",
+						interface: "AuthInterface",
 						method: "login"
 					},
 					{
 						id: "createproject",
 						name: "Create project",
 						description: "Create a project, if the call is successful, the Object-ID of the project will be stored for you, so it can be used in the actual checkin call",
-						interface: "Bimsie1ServiceInterface",
+						interface: "ServiceInterface",
 						method: "addProject",
 						post: function(data, context){
 							context.poid = data.oid;
@@ -240,7 +240,7 @@ LazyLoad.js([
 						id: "finddeserializer",
 						name: "Find deserializer",
 						description: "To checkin a file, we have to define a deserializer. If you are uploading an IFC file, use \"ifc\" here",
-						interface: "Bimsie1ServiceInterface",
+						interface: "ServiceInterface",
 						method: "getSuggestedDeserializerForExtension",
 						post: function(data, context) {
 							context.deserializerOid = data.oid;
@@ -250,7 +250,7 @@ LazyLoad.js([
 						id: "checkin",
 						name: "Checkin",
 						description: "This call will checkin the actual file, poid and deserializerOid should be prefilled if you successfully executed the previous steps",
-						interface: "Bimsie1ServiceInterface",
+						interface: "ServiceInterface",
 						method: "checkin",
 						fieldChange: function(fieldName, data, form){
 							if (fieldName == "data") {
@@ -273,14 +273,14 @@ LazyLoad.js([
                                 id: "login",
                                 name: "Login",
                                 description: "First you will have to login, if you are already logged-in, you can skip this step",
-                                interface: "Bimsie1AuthInterface",
+                                interface: "AuthInterface",
                                 method: "login"
                             },
                             {
                                 id: "getAllProjects",
                                 name: "Get all projects",
                                 description: "Get all projects; then you have to pick one Project Object-ID and one corresponding Revision-ID for use in next step (e.g. \"oid\": 1245185, \"lastRevisionId\": 1245187)",
-                                interface: "Bimsie1ServiceInterface",
+                                interface: "ServiceInterface",
                                 method: "getAllProjects",
                                 post: function (data, context) {
                                     context.poid = data.oid;
@@ -291,7 +291,7 @@ LazyLoad.js([
                                 id: "getProjectsByName",
                                 name: "Alternative: Get project by name",
                                 description: "Alternative: Get project by name; (e.g. \"B109-Architektur\"), then you have to pick one Revision-ID for use in next step, e.g. \"lastRevisionId\"",
-                                interface: "Bimsie1ServiceInterface",
+                                interface: "ServiceInterface",
                                 method: "getProjectsByName",
                                 pre: function (context, form) {
                                     form.setFieldValue("name", "B109-Architektur");
@@ -314,7 +314,7 @@ LazyLoad.js([
                                 id: "getDataObjectsByType_IfcSite",
                                 name: "Get available IfcSite(s)",
                                 description: "Get available IfcSite(s) in revision by using getDataObjectsByType (using packageName \"ifc2x3tc1\")",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectsByType",
                                 pre: function (context, form) {
                                     form.setFieldValue("packageName", "ifc2x3tc1");
@@ -330,7 +330,7 @@ LazyLoad.js([
                                 id: "getDataObjectsByType_IfcBuilding",
                                 name: "Get available IfcBuilding(s)",
                                 description: "Get available IfcBuilding(s) in revision by using getDataObjectsByType (using packageName \"ifc2x3tc1\") and use one building OID for the next step.",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectsByType",
                                 pre: function (context, form) {
                                     form.setFieldValue("packageName", "ifc2x3tc1");
@@ -347,7 +347,7 @@ LazyLoad.js([
                                 name: "Get name and data objects of one IfcBuilding",
                                 description: "Get available objects of one IfcBuilding (by building OID), then search for \"typeName\": \"IfcRelDefinesByProperties\" and use the OID of that for the next step.<br />"
                                            + "for later use also search for \"fieldName\": \"IsDecomposedBy\" and relating \"typeName\": \"IfcRelAggregates\" and use the OID of that for later step.",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid",
                                 pre: function (context, form) {
                                     form.setFieldValue("roid", context.roid);
@@ -362,7 +362,7 @@ LazyLoad.js([
                                 id: "getDataObjectByOid_IfcBuilding_IfcRelDefinesByProperties",
                                 name: "Get available data objects of IfcRelDefinesByProperties of one IfcBuilding",
                                 description: "Get available data objects of IfcRelDefinesByProperties, then search for \"typeName\": \"IfcPostalAddress\" and use the OID of that for the next step.",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid",
                                 pre: function (context, form) {
                                     form.setFieldValue("roid", context.roid);
@@ -376,7 +376,7 @@ LazyLoad.js([
                                 id: "getDataObjectByOid_IfcPostalAddress",
                                 name: "Get IfcPostalAddress of one IfcBuilding",
                                 description: "Get available IfcPostalAddress of one IfcBuilding",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid",
                                 pre: function (context, form) {
                                     form.setFieldValue("roid", context.roid);
@@ -387,7 +387,7 @@ LazyLoad.js([
                                 id: "getDataObjectByOid_IfcBuilding_IfcRelAggregates",
                                 name: "Get available IfcBuildingStorey(s) of one IfcBuilding",
                                 description: "Get available IfcBuildingStorey(s) of one IfcBuilding by IfcRelAggregates, then search for \"typeName\": \"IfcBuildingStorey\" and use the OID of one IfcBuildingStorey for the next step.",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid",
                                 pre: function (context, form) {
                                     form.setFieldValue("roid", context.roid);
@@ -402,7 +402,7 @@ LazyLoad.js([
                                 name: "Get name (and other data objects) of one IfcBuildingStorey",
                                 description: "Get available name (and other data objects) of one IfcBuildingStorey <br />"
                                            + "for use in next step search for \"fieldName\": \"IsDecomposedBy\" and relating \"typeName\": \"IfcRelAggregates\" and use the OID of that for next step.",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid",
                                 pre: function (context, form) {
                                     form.setFieldValue("roid", context.roid);
@@ -417,7 +417,7 @@ LazyLoad.js([
                                 id: "getDataObjectByOid_IfcBuildingStorey_IfcRelAggregates",
                                 name: "Get available IfcSpace(s) of one IfcBuildingStorey",
                                 description: "Get available IfcSpace(s) of one IfcBuildingStorey by IfcRelAggregates, then search for \"typeName\": \"IfcSpace\" and use the OID of one IfcBuildingStorey for the next step.",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid",
                                 pre: function (context, form) {
                                     form.setFieldValue("roid", context.roid);
@@ -432,7 +432,7 @@ LazyLoad.js([
                                 name: "Get name (and other data objects) of one IfcSpace",
                                 description: "Get available name (and other data objects) of one IfcSpace <br />"
                                            + "for use in next step search for \"fieldName\": \"IsDefinedBy\" and relating \"typeName\": \"IfcRelDefinesByProperties\" and use the OID(s) of that for next step.",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid",
                                 pre: function (context, form) {
                                     form.setFieldValue("roid", context.roid);
@@ -449,7 +449,7 @@ LazyLoad.js([
                                 name: "Get available IfcRelDefinesByProperties of one IfcSpace",
                                 description: "Get available IfcRelDefinesByProperties of one IfcSpace (try all OIDs from step before...)<br />"
                                            + "...and search for \"fieldName\": \"RelatingPropertyDefinition\" and relating \"typeName\": \"IfcElementQuantity\" and use the OID(s) of that for next step.",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid",
                                 pre: function (context, form) {
                                     form.setFieldValue("roid", context.roid);
@@ -465,7 +465,7 @@ LazyLoad.js([
                                 name: "Get IfcElementQuantity of one IfcSpace",
                                 description: "Get IfcElementQuantity of one IfcSpace..)<br />"
                                            + "...and search for \"fieldName\": \"Quantities\" and relating \"typeName\": \"IfcQuantityArea\" etc. and use the OID(s) of that for next step.",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid",
                                 pre: function (context, form) {
                                     form.setFieldValue("roid", context.roid);
@@ -481,7 +481,7 @@ LazyLoad.js([
                                 description: "Get IfcQuantityArea of one IfcSpace..)<br />"
                                            + "...and search for \"stringValue\": \"NetFloorArea\" and relating \"fieldName\": \"AreaValue\" to find the \"stringValue\": e.g. \"17.9335476103249\" [m²]<br />"
                                            + "...and search for \"stringValue\": \"GrossFloorArea\" and relating \"fieldName\": \"AreaValue\" to find the \"stringValue\": e.g. \"17.9335476103249\" [m²]",
-                                interface: "Bimsie1LowLevelInterface",
+                                interface: "LowLevelInterface",
                                 method: "getDataObjectByOid"
                             },
             		    ]
@@ -503,12 +503,10 @@ LazyLoad.js([
 			"MetaInterface": "org_bimserver_MetaInterface",
 			"PluginInterface": "org_bimserver_PluginInterface",
 			"SettingsInterface": "org_bimserver_SettingsInterface",
-			"Bimsie1NotificationRegistryInterface": "org_buildingsmart_bimsie1_Bimsie1NotificationRegistryInterface",
-			"Bimsie1RemoteServiceInterface": "org_buildingsmart_bimsie1_Bimsie1RemoteServiceInterface",
-			"Bimsie1AuthInterface": "org_buildingsmart_bimsie1_Bimsie1AuthInterface",
-			"Bimsie1ServiceInterface": "org_buildingsmart_bimsie1_Bimsie1ServiceInterface",
-			"Bimsie1LowLevelInterface": "org_buildingsmart_bimsie1_Bimsie1LowLevelInterface",
-			"Bimsie1NotificationInterface": "org_buildingsmart_bimsie1_Bimsie1NotificationInterface"
+			"NotificationRegistryInterface": "org_bimserver_NotificationRegistryInterface",
+			"RemoteServiceInterface": "org_bimserver_RemoteServiceInterface",
+			"LowLevelInterface": "org_bimserver_LowLevelInterface",
+			"NotificationInterface": "org_bimserver_NotificationInterface"
 		};
 
 		othis.lastCall = {};
@@ -1004,7 +1002,7 @@ LazyLoad.js([
 		};
 		
 		$(".loginButton").click(function(){
-			othis.findServiceInterface("Bimsie1AuthInterface", function(serviceInterface){
+			othis.findServiceInterface("AuthInterface", function(serviceInterface){
 				serviceInterface.methods.forEach(function(method){
 					if (token == null && method.name == "login") {
 						othis.loadExampleJson(null, serviceInterface, method, $(".method"));
