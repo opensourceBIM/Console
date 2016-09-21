@@ -832,7 +832,10 @@ LazyLoad.js([
 						$(".responsediv pre").removeClass("error").addClass("success");
 						$(".responsediv pre").removeClass("prettyprinted");
 						$(".responsediv pre").text(JSON.stringify(data, null, '  '));
-						prettyPrint();
+						if (data.length < 10000) {
+							// Pretty print is very slow on large input
+							prettyPrint();
+						}
 						$(".responsediv").show();
 						
 						if (othis.currentScenarioContext != null) {
