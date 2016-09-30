@@ -204,7 +204,7 @@ LazyLoad.js([
 		}
 		
 		$(".addressInput").change(function(){
-			$.cookie("address" + window.document.location.port, $(".addressInput").val(), { expires: 31, path: '/' });
+			$.cookie("address" + window.document.location.port, $(".addressInput").val(), { expires: 31 });
 		});
 		$(".logo").attr("src", Global.baseDir + "img/consolelogo.png");
 		$(".largeLogo").attr("src", Global.baseDir + "img/consolelogolarge.png");
