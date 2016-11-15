@@ -512,35 +512,39 @@ LazyLoad.js([
 		othis.lastCall = {};
 
 		this.call = function(requestObject, callback) {
-			$.ajax({
-				url: $(".addressInput").val() + "/json",
-				data: JSON.stringify(requestObject),
-				contentType: "application/json",
-				type: "POST",
-				dataType: "json",
-				success: function(data){
-					if (data.exception == null) {
-						if (requestObject.request != null && requestObject.request.method == "login") {
-							token = data.response.result;
-							$.cookie("autologin" + window.document.location.port, token);
-							$(".loginButton").html("Logout");
-						} else if (requestObject.request != null && requestObject.request.method == "logout") {
-							token = null;
-							$.cookie("autologin" + window.document.location.port, null);
-							$(".loginButton").html("Login");
+			if (requestObject.request.method == "getDownloadData") {
+				document.location = $(".addressInput").val() + "/download?topicId=" + requestObject.request.parameters.topicId + "&token=" + $.cookie("autologin" + window.document.location.port);
+			} else {
+				$.ajax({
+					url: $(".addressInput").val() + "/json",
+					data: JSON.stringify(requestObject),
+					contentType: "application/json",
+					type: "POST",
+					dataType: "json",
+					success: function(data){
+						if (data.exception == null) {
+							if (requestObject.request != null && requestObject.request.method == "login") {
+								token = data.response.result;
+								$.cookie("autologin" + window.document.location.port, token);
+								$(".loginButton").html("Logout");
+							} else if (requestObject.request != null && requestObject.request.method == "logout") {
+								token = null;
+								$.cookie("autologin" + window.document.location.port, null);
+								$(".loginButton").html("Login");
+							}
+							callback(data);
+						} else {
+							$(".output").removeClass("success").addClass("error");
+							$(".output").val(JSON.stringify(data, null, '  '));
+							$(".console").val(data.exception.message);
 						}
-						callback(data);
-					} else {
+					},
+					error: function(jqXHR, textStatus, errorThrown){
 						$(".output").removeClass("success").addClass("error");
-						$(".output").val(JSON.stringify(data, null, '  '));
-						$(".console").val(data.exception.message);
+						$(".output").val(textStatus);
 					}
-				},
-				error: function(jqXHR, textStatus, errorThrown){
-					$(".output").removeClass("success").addClass("error");
-					$(".output").val(textStatus);
-				}
-			});
+				});
+			}
 		};
 
 		this.makeExampleFromType = function(fieldName, type, genericType, doc, indent) {
