@@ -45,6 +45,7 @@
 			<resource>
 				<directory>plugin</directory>
 				<targetPath>plugin</targetPath>
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 		<plugins>
