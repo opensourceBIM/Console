@@ -814,16 +814,16 @@ LazyLoad.js([
 			container.find(".parameters").show();
 			
 			var keys = Object.keys(method.parameters);
+			container.show();
 			if (keys.length > 0) {
 				othis.loadParameter(container, call, 0, method, keys, function(){
-					container.show();
 					container.find(".parameters input:first").focus();
-					container.find(".responsediv").hide();
-					othis.inputChange();
 				});
 			} else {
 				container.find(".parametersForm").append("<p>This method has no arguments</p>");
 			}
+			container.find(".responsediv").hide();
+			othis.inputChange();
 		};
 
 		this.loadMethods = function(event) {
