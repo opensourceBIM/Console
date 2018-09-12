@@ -137,6 +137,13 @@
 			</build>
 		</profile>
 	</profiles>
+	<dependencies>
+		<dependency>
+			<groupId>org.opensourcebim</groupId>
+			<artifactId>pluginbase</artifactId>
+			<version>1.5.106</version>
+		</dependency>
+	</dependencies>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
