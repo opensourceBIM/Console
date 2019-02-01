@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opensourcebim</groupId>
   <artifactId>console</artifactId>
-  <version>0.0.31-SNAPSHOT</version>
+  <version>0.0.32-SNAPSHOT</version>
   <name>Console</name>
   <description>Console</description>
   <url>https://github.com/opensourceBIM/Console</url>
