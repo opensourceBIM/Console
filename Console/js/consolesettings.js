@@ -7,11 +7,12 @@ var ConsoleSettings = {
 	getStaticServerAddress: function(callback){
 		var pathname = document.location.pathname;
 		if (pathname.length > 13 && pathname.substring(pathname.length - 14) == "/apps/console/") {
-			// We assume that BIMsurfer 3 is being served from a BIMserver and that this is also the BIMserver we would like to connect to
-			const href = document.location.href; 
+			// We assume that Console is being served from a BIMserver and that this is also the BIMserver we would like to connect to
+			var href = document.location.href; 
 			callback(href.substring(0, href.indexOf("/apps/console/")));
 		} else {
 			// Return a default
+			console.log("Trying to connect to http://localhost:8080, because we don't know where to find BIMserver", document.location);
 			callback("http://localhost:8080");
 		}
 	},
