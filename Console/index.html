@@ -514,6 +514,10 @@ LazyLoad.js([
 		];
 		
 		var token = $.cookie("autologin" + window.document.location.port);
+		if (QueryString.token) {
+			$.cookie("autologin" + window.document.location.port, QueryString.token);
+			window.location.href = window.location.origin + window.location.pathname;
+		}
 		if (token != null) {
 			$(".loginButton").html("Logout");
 		}
