@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opensourcebim</groupId>
   <artifactId>console</artifactId>
-  <version>0.0.59</version>
+  <version>0.0.60-SNAPSHOT</version>
   <name>Console</name>
   <description>Console</description>
   <url>https://github.com/opensourceBIM/Console</url>
@@ -27,7 +27,7 @@
   <scm>
     <connection>scm:git:https://github.com/opensourceBIM/Console.git</connection>
     <developerConnection>scm:git:https://github.com/opensourceBIM/Console.git</developerConnection>
-    <tag>console-0.0.59</tag>
+    <tag>console-0.0.8</tag>
     <url>https://github.com/opensourceBIM/Console.git</url>
   </scm>
   <issueManagement>
