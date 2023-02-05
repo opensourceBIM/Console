@@ -12,13 +12,14 @@ var ConsoleSettings = {
 			callback(href.substring(0, href.indexOf("/apps/console/")));
 		} else {
 			// Return a default
-			console.log("Trying to connect to http://localhost:8080, because we don't know where to find BIMserver", document.location);
-			callback("http://localhost:8080");
+			console.log("Trying to connect to http://localhost:8082, because we don't know where to find BIMserver", document.location);
+			callback("http://localhost:8082");
 		}
 	},
 	getVersion: function(){
 		return "1.5";
-	}, getServiceInterfaces: function(consoleObject, callback){
+	},
+	getServiceInterfaces: function(consoleObject, callback){
 		var request = {
 			request: {
 				interface: "org.bimserver.MetaInterface",
