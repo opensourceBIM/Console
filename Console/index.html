@@ -503,8 +503,8 @@ LazyLoad.js([
                                 id: "getDataObjectByOid_IfcSpace_IfcQuantityArea",
                                 name: "Get IfcQuantityArea of one IfcSpace",
                                 description: "Get IfcQuantityArea of one IfcSpace..)<br />"
-                                           + "...and search for \"stringValue\": \"NetFloorArea\" and relating \"fieldName\": \"AreaValue\" to find the \"stringValue\": e.g. \"17.9335476103249\" [m²]<br />"
-                                           + "...and search for \"stringValue\": \"GrossFloorArea\" and relating \"fieldName\": \"AreaValue\" to find the \"stringValue\": e.g. \"17.9335476103249\" [m²]",
+                                           + "...and search for \"stringValue\": \"NetFloorArea\" and relating \"fieldName\": \"AreaValue\" to find the \"stringValue\": e.g. \"17.9335476103249\" [mï¿½]<br />"
+                                           + "...and search for \"stringValue\": \"GrossFloorArea\" and relating \"fieldName\": \"AreaValue\" to find the \"stringValue\": e.g. \"17.9335476103249\" [mï¿½]",
                                 interface: "LowLevelInterface",
                                 method: "getDataObjectByOid"
                             },
@@ -550,7 +550,7 @@ LazyLoad.js([
 					type: "POST",
 					dataType: "json",
 					success: function(data){
-						if (data.exception == null) {
+						if (data.response.exception == null) {
 							if (requestObject.request != null && requestObject.request.method == "login") {
 								token = data.response.result;
 								$.cookie("autologin" + window.document.location.port, token);
@@ -562,14 +562,15 @@ LazyLoad.js([
 							}
 							callback(data);
 						} else {
-							$(".output").removeClass("success").addClass("error");
-							$(".output").val(JSON.stringify(data, null, '  '));
-							$(".console").val(data.exception.message);
+							$(".responsediv pre").removeClass("success").addClass("error");
+							$(".responsediv pre").text(JSON.stringify(data, null, '  '));
+							$(".responsediv").show();
 						}
 					},
 					error: function(jqXHR, textStatus, errorThrown){
-						$(".output").removeClass("success").addClass("error");
-						$(".output").val(textStatus);
+						$(".responsediv pre").removeClass("success").addClass("error");
+						$(".responsediv pre").text(textStatus);
+						$(".responsediv").show();
 					}
 				});
 			}
