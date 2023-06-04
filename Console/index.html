@@ -266,6 +266,9 @@ LazyLoad.js([
 						description: "To checkin a file, we have to define a deserializer. If you are uploading an IFC file, use \"ifc\" here",
 						interface: "ServiceInterface",
 						method: "getSuggestedDeserializerForExtension",
+						pre: function(context, form){
+							form.setFieldValue("poid", context.poid);
+						},
 						post: function(data, context) {
 							context.deserializerOid = data.oid;
 						}
@@ -275,7 +278,7 @@ LazyLoad.js([
 						name: "Checkin",
 						description: "This call will checkin the actual file, poid and deserializerOid should be prefilled if you successfully executed the previous steps",
 						interface: "ServiceInterface",
-						method: "checkin",
+						method: "checkinSync",
 						fieldChange: function(fieldName, data, form){
 							if (fieldName == "data") {
 								form.setFieldValue("fileSize", data.size);
@@ -550,27 +553,10 @@ LazyLoad.js([
 					type: "POST",
 					dataType: "json",
 					success: function(data){
-						if (data.response.exception == null) {
-							if (requestObject.request != null && requestObject.request.method == "login") {
-								token = data.response.result;
-								$.cookie("autologin" + window.document.location.port, token);
-								$(".loginButton").html("Logout");
-							} else if (requestObject.request != null && requestObject.request.method == "logout") {
-								token = null;
-								$.cookie("autologin" + window.document.location.port, null);
-								$(".loginButton").html("Login");
-							}
-							callback(data);
-						} else {
-							$(".responsediv pre").removeClass("success").addClass("error");
-							$(".responsediv pre").text(JSON.stringify(data, null, '  '));
-							$(".responsediv").show();
-						}
+						callback(data);
 					},
 					error: function(jqXHR, textStatus, errorThrown){
-						$(".responsediv pre").removeClass("success").addClass("error");
-						$(".responsediv pre").text(textStatus);
-						$(".responsediv").show();
+						console.error(textStatus);
 					}
 				});
 			}
@@ -867,22 +853,37 @@ LazyLoad.js([
 				try {
 					input = JSON.parse(input);
 					othis.call(input, function(data){
-						$(".responsediv pre").removeClass("error").addClass("success");
-						$(".responsediv pre").removeClass("prettyprinted");
-						$(".responsediv pre").text(JSON.stringify(data, null, '  '));
-						if (data.length < 10000) {
-							// Pretty print is very slow on large input
-							prettyPrint();
-						}
-						$(".responsediv").show();
-						
-						if (othis.currentScenarioContext != null) {
-							if (othis.currentScenarioContext.call != null) {
-								if (othis.currentScenarioContext.call.post != null) {
-									othis.currentScenarioContext.call.post(data.response.result, othis.currentScenarioContext);
+						if (data.response.exception == null) {
+							if (input.request != null && input.request.method == "login") {
+								token = data.response.result;
+								$.cookie("autologin" + window.document.location.port, token);
+								$(".loginButton").html("Logout");
+							} else if (input.request != null && input.request.method == "logout") {
+								token = null;
+								$.cookie("autologin" + window.document.location.port, null);
+								$(".loginButton").html("Login");
+							}
+							$(".responsediv pre").removeClass("error").addClass("success");
+							$(".responsediv pre").removeClass("prettyprinted");
+							$(".responsediv pre").text(JSON.stringify(data, null, '  '));
+							if (data.length < 10000) {
+								// Pretty print is very slow on large input
+								prettyPrint();
+							}
+							if (othis.currentScenarioContext != null) {
+								if (othis.currentScenarioContext.call != null) {
+									if (othis.currentScenarioContext.call.post != null) {
+										othis.currentScenarioContext.call.post(data.response.result, othis.currentScenarioContext);
+									}
 								}
 							}
+						} else {
+							$(".responsediv pre").removeClass("success").addClass("error");
+							$(".responsediv pre").text(JSON.stringify(data, null, '  '));
 						}
+
+						$(".responsediv").show();
+						
 					});
 				} catch (e) {
 					$(".responsediv pre").removeClass("success").addClass("error");
