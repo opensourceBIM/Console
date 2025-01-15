@@ -685,7 +685,8 @@ LazyLoad.js([
 			div.append(controls);
 			
 			if (type.simpleName == "String") {
-				var input = $("<input type=\"text\" class=\"form-control\"/>");
+				var inputType = fieldName.includes("password") ? "password" : "text";
+				var input = $("<input type=\"" + inputType + "\" class=\"form-control\"/>");
 				input.addClass("__field" + fieldName);
 				input.keyup(othis.inputChange);
 				input.enterpress(othis.send);
