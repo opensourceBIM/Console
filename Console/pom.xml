@@ -90,6 +90,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.6.0</version>
         <executions>
           <execution>
             <id>attach-plugin</id>
@@ -163,7 +164,6 @@
                     <arg>loopback</arg>
                   </gpgArguments>
                   <keyname>${gpg.keyname}</keyname>
-                  <passphraseServerId>${gpg.keyname}</passphraseServerId>
                 </configuration>
               </execution>
             </executions>
